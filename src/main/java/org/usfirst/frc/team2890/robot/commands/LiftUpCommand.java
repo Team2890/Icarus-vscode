@@ -25,8 +25,8 @@ public class LiftUpCommand extends TimedCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//RobotMap.manipulatorSubsystem.liftUp();
-    	RobotMap.rightTowerTalon.set(RobotMap.TOWER_UP_VARIABLE * RobotMap.TOWER_UP_DIRECTION);
-		RobotMap.leftTowerTalon.set(RobotMap.TOWER_UP_VARIABLE * RobotMap.TOWER_UP_DIRECTION);
+    	RobotMap.rightTowerTalon.set(RobotMap.TOWER_UP_VARIABLE);
+		RobotMap.leftTowerTalon.set(RobotMap.TOWER_UP_VARIABLE);
 		System.out.println("In Lift Tower Command. ");
     }
 

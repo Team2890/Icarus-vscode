@@ -9,6 +9,7 @@ package org.usfirst.frc.team2890.robot.subsystems;
 
 import org.usfirst.frc.team2890.robot.RobotMap;
 import org.usfirst.frc.team2890.robot.commands.*;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -26,14 +27,11 @@ public class DriveTrainSubsystem extends Subsystem
 		setDefaultCommand(new XboxDriveCommand());
 	}
 	
-
 	public void xboxArcadeDrive()
 	{
-		//getY goes forwards
-		// getX rotates left and right and needs to be inverted because of talon behavior
 		RobotMap.driveTrain.arcadeDrive(RobotMap.driverController.getY(Hand.kLeft) * RobotMap.FORWARDS_BACKWARDS_SENSITIVITY, 
 				RobotMap.driverController.getX(Hand.kRight) * RobotMap.X_INVERTED * RobotMap.ROTATION_SENSITIVTY);
-	} 
+	}
 	
 	public void tankDrive()
 	{
@@ -53,6 +51,7 @@ public class DriveTrainSubsystem extends Subsystem
 	
 	public void turnLeft()
 	{
+
 		RobotMap.driveTrain.arcadeDrive(0, RobotMap.AUTONOMOUS_ROTATE_LEFT_SPEED);
 	}
 	
@@ -66,36 +65,45 @@ public class DriveTrainSubsystem extends Subsystem
 		RobotMap.driveTrain.stopMotor();
 	}
 	
+	/*
 	public void autonomousRotateWithCamera()
 	{
 		double turnValue = 0; //PLEASE REPLACE ZERO WITH CAMERA THREAD INPUT!!!
+								//PLEASE REPLACE THIS!!!
 		double currentAngle = RobotMap.gyro.getAngle();
 		double goalAngle = currentAngle + turnValue;
+		
+		/*if(Math.abs(currentAngle)<Math.abs(goalAngle))
+		{
+			if(turnValue > 0) turnRight();
+			if(turnValue < 0) turnLeft();
+			//if(RobotMap.gyro.getAngle()-turnValue <= 1 || RobotMap.gyro.getAngle()-turnValue >= -1) stopMoving();
+		} 
 		
 		if(turnValue > 0) 
 			{
 				turnLeft();
 				goalAngle = currentAngle + turnValue;
-				if(currentAngle <= goalAngle + 1 || currentAngle >= goalAngle - 1) stopMoving();
+				if(currentAngle <= goalAngle+1 || currentAngle >= goalAngle-1) stopMoving();
 			}
 		if(turnValue < 0) 
 			{
 				turnRight();
 				goalAngle = currentAngle + turnValue;
-				if(currentAngle <= goalAngle + 1 || currentAngle >= goalAngle - 1) stopMoving();
+				if(currentAngle <= goalAngle+1 || currentAngle >= goalAngle-1) stopMoving();
 			}
 	}
+	*/
 	
 	public void turnDegrees(double goalAngle, double turnDegrees)
 	{
 		if(turnDegrees > 0)
 		{
 			if(RobotMap.gyro.getAngle() < goalAngle)
-			{
 				turnRight();
-			}
 			else
 			{
+				System.out.println("Stopped Moving");
 				stopMoving();
 				RobotMap.stopRotating = true;
 			}
@@ -103,9 +111,7 @@ public class DriveTrainSubsystem extends Subsystem
 		else
 		{
 			if(RobotMap.gyro.getAngle() > goalAngle)
-			{
 				turnLeft();
-			}
 			else
 			{
 				stopMoving();
@@ -114,16 +120,22 @@ public class DriveTrainSubsystem extends Subsystem
 		}
 	}
 	
+<<<<<<< HEAD
+=======
 	public void rangedDriveForward()
 	{
 		if(RobotMap.rangeFinder.getRangeInches() >= RobotMap.RANGE_TARGET)
 		{
 			driveBackward();
+			System.out.println("Have Not Reached Target Range");
 		}
 		else
 		{
 			stopMoving();
 			RobotMap.rangeFinderExitFlag = true;
+			System.out.println("Reached Target Range");
 		}
 	}
+>>>>>>> manipulatorWithRangeFinder
+	
 }

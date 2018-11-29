@@ -13,10 +13,13 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2890.robot.commands.*;
 import org.usfirst.frc.team2890.robot.subsystems.*;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -24,6 +27,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -48,8 +53,8 @@ public class RobotMap
 	//===============================================
 	public static final int FRONT_RIGHT_TALON_ID = 1;
 	public static final int REAR_RIGHT_TALON_ID = 4;
-	public static final int FRONT_LEFT_TALON_ID = 2;
-	public static final int REAR_LEFT_TALON_ID = 3;
+	public static final int FRONT_LEFT_TALON_ID = 3;
+	public static final int REAR_LEFT_TALON_ID = 2;
 	public static final int TEST_TALON_ID = 6;
 	public static final int DRIVER_CONTROLLER_PORT = 0;
 	public static final int ASSISTANT_DRIVER_CONTROLLER_PORT = 1;
@@ -65,8 +70,12 @@ public class RobotMap
 	public static final int RANGEFINDER_ECHOCHANNEL = 1;
 	public static final int LEFT_TALON_TOWER_ID = 5;
 	public static final int RIGHT_TALON_TOWER_ID = 6;
+<<<<<<< HEAD
+	public static final int CAMERA_SERVO_ID = 0;
+=======
 	public static final int LOWER_LIMIT_SWITCH_PORT = 8;
 	public static final int UPPER_LIMIT_SWITCH_PORT = 9;
+>>>>>>> AutonomousLiftCommandGroup
 	
 	//===============================================
 	//VARIABLES
@@ -87,9 +96,8 @@ public class RobotMap
 	public static final double TOWER_UP_VARIABLE = 1.0;
 	public static final double TOWER_DOWN_VARIABLE = 1.0;
 	public static final double TRIGGER_SENSITIVIY = .15; //At this point, the tower will start moving.
-	public static final int TOWER_DOWN_DIRECTION = -1; 
-	public static final double TOWER_DOWN_SLOW_SPEED = 0.5;
-	public static final double LIFT_TIMED_RAISE = 1.0;
+	public static final int TOWER_UP_DIRECTION = -1; 
+	public static final double LIFT_TIMED_RAISE = 3.0;
 	
 	public static double centerX;
 	public static double distanceFromTargetUsingTargeting;
@@ -123,6 +131,9 @@ public class RobotMap
 	public static boolean rangeFinderExitFlag = false;
 	public static boolean keepThreadRunning = true;
 	public static boolean shiftGearButtonFlag = true;
+<<<<<<< HEAD
+	public static boolean cameraServoFlag = true;
+=======
 	public static boolean liftUpFlag = false;
 	public static boolean upperLimitSwitch = false;
 	public static boolean lowerLimitSwitch = false;
@@ -135,6 +146,7 @@ public class RobotMap
 	public static boolean lowGear = false;
 	public static boolean elbowIsDown = false;
 	public static boolean turnSecondCameraOn = true;
+>>>>>>> AutonomousLiftCommandGroup
 	//
 	
 	//===============================================
@@ -168,10 +180,14 @@ public class RobotMap
 	public static DoubleSolenoid grabberSolenoid;
 	public static DoubleSolenoid elbowSolenoid;
 	public static DoubleSolenoid gearBoxSolenoid;
+<<<<<<< HEAD
+	public static Servo cameraServo;
+=======
 	public static DoubleSolenoid ratchetSolenoid;
 	
 	public static UsbCamera camera;
 	public static UsbCamera secondCamera;
+>>>>>>> AutonomousLiftCommandGroup
 
 	//===============================================
 	//COMMANDS
@@ -194,7 +210,7 @@ public class RobotMap
 	public static Command timedDriveForwardAutonomousCommand;
 	public static Command rotationAutonomous; 
 	public static Command controlManipulatorCommand;
-	public static Command getDistanceInInches; 
+	public static Command getDistanceInInches; //Testing on SmartDashboard
 	public static Command rangedDriveForwardCommand;
 	public static Command liftUpCommand;
 	public static Command clawDownCommand;
@@ -219,9 +235,9 @@ public class RobotMap
 		rangeFinder = new Ultrasonic(RANGEFINDER_PINGCHANNEL, RANGEFINDER_ECHOCHANNEL);
 		
 		compressor = new Compressor();
-		grabberSolenoid = new DoubleSolenoid(GRABBER_SOLENOID_FORWARD_PORT, GRABBER_SOLENOID_BACKWARD_PORT); 
-		elbowSolenoid = new DoubleSolenoid(ROTATE_SOLENOID_FORWARD_PORT, ROTATE_SOLENOID_BACKWARD_PORT); 
-		gearBoxSolenoid = new DoubleSolenoid(GEARBOX_SOLENOID_FORWARD_PORT, GEARBOX_SOLENOID_BACKWARD_PORT); 
+		grabberSolenoid = new DoubleSolenoid(GRABBER_SOLENOID_FORWARD_PORT, GRABBER_SOLENOID_BACKWARD_PORT); //GRABBER_SOLENOID_FORWARD_PORT, GRABBER_SOLENOID_BACKWARD_PORT
+		elbowSolenoid = new DoubleSolenoid(ROTATE_SOLENOID_FORWARD_PORT, ROTATE_SOLENOID_BACKWARD_PORT); //ROTATE_SOLENOID_FORWARD_PORT, ROTATE_SOLENOID_BACKWARD_PORT
+		gearBoxSolenoid = new DoubleSolenoid(GEARBOX_SOLENOID_FORWARD_PORT, GEARBOX_SOLENOID_BACKWARD_PORT); //GEARBOX_SOLENOID_FORWARD_PORT, GEARBOX_SOLENOID_BACKWARD_PORT
 		ratchetSolenoid = new DoubleSolenoid(RATCHET_ENGAGE_CHANNEL_PORT, RATCHET_DISENGAGE_CHANNEL_PORT);
 		
 		upperElevatorLimitSwitch = new DigitalInput(UPPER_LIMIT_SWITCH_PORT);
@@ -234,13 +250,15 @@ public class RobotMap
 		leftTowerTalon = new WPI_TalonSRX(RIGHT_TALON_TOWER_ID); 
 		rightTowerTalon = new WPI_TalonSRX(LEFT_TALON_TOWER_ID);
 		
+		cameraServo = new Servo(CAMERA_SERVO_ID);
+		
 		rightTalonGroup = new SpeedControllerGroup(frontRightTalon, rearRightTalon);
 		leftTalonGroup = new SpeedControllerGroup(frontLeftTalon, rearLeftTalon);
 		
-
-		//Sets rear right talon to spin backwards so motor doesn't jam
-		rearRightTalon.setInverted(true);
-	
+		//DriveTrainSubsystem.talonRampOn(); // This is for testing, a command should be called instead
+		
+		rightTalonGroup.setInverted(true);
+		leftTalonGroup.setInverted(true);
 		
 		driveTrain = new DifferentialDrive(leftTalonGroup, rightTalonGroup);
 		
@@ -268,6 +286,7 @@ public class RobotMap
 
 		initialGyro = RobotMap.gyro.getAngle();
 
+		System.out.println("In robotInit method");
 	}
 
 	public static void startThread()
@@ -276,7 +295,7 @@ public class RobotMap
 		hambyRoomGripPipelineLongRange = new HambyRoomGripPipelineLongRange();
 		hambyRoomGripPipelineShortRange = new HambyRoomGripPipelineShortRange();
 		
-		
+		System.out.println("In startThread method");
 		
 		centerX = -1;
 		distanceFromTargetUsingTargeting = -1;
@@ -284,15 +303,15 @@ public class RobotMap
 		
 		m_visionThread = new Thread(() -> 
 		{
-			
+			System.out.println("In vision thread");
 			// Get the UsbCamera from CameraServer
 			camera = CameraServer.getInstance().startAutomaticCapture();
 			secondCamera = CameraServer.getInstance().startAutomaticCapture();
 			// Set the resolution
-			camera.setResolution(1, 1);
+			camera.setResolution(640, 480);
 			camera.setFPS(30);
 			secondCamera.setResolution(1, 1);
-			secondCamera.setFPS(30);
+			secondCamera.setFPS(1);
 			
 			// Get a CvSink. This will capture Mats from the camera
 			CvSink cvSink = CameraServer.getInstance().getVideo();
